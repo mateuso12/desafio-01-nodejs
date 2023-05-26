@@ -1,4 +1,6 @@
-import fs from 'node:fs'
+import { Database } from "./database.js"
+
+const database = new Database()
 
 export const routes = [
   {
@@ -6,7 +8,6 @@ export const routes = [
     path: '/tasks',
     handler: (req, res) => {
      const {body} = req
-     console.log('body: ', body);
       return res.writeHead(201).end()
     }
   },
@@ -14,7 +15,9 @@ export const routes = [
     method: 'GET',
     path: '/tasks',
     handler: (req, res) => {
-      res.end('Metodo GET TESTE')
+
+      const tasks = database.select('tasks', null)
+      res.end(JSON.stringify(tasks))
     }
   },
   {
